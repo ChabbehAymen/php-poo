@@ -1,7 +1,7 @@
 <?php
-// require_once './Controller/BooksController.php';
+require_once './Controller/BooksController.php';
 
-// $bookManager = new BooksController();
+$bookManager = new BooksController();
 $runProgram = true;
 $programEnded = false;
 $tab = str_repeat("\t", 5);
@@ -15,14 +15,11 @@ function addBook($bookManager, $tab) {
     echo "\n";
     $book = [
         'title' => ask($tab . 'Book Title: '),
-        'writer' => ask($tab . 'Writer: '),
-        'code' => ask($tab . 'Code: '),
-        'pubDate' => ask($tab . 'Publication Date: '),
-        'type' => ask($tab . 'Type: '),
-        'size' => ask($tab . 'Size: '),
-        'disposability' => ask($tab . 'Disposability: ')
+        'author' => [ask($tab . 'Author: ')],
+        'reader' => ask($tab . 'Reader: '),
+        'loaned' => ask($tab . 'Is It Loaned: '),
     ];
-    if ($bookManager->insert($book)) {
+    if ($bookManager->addBook($book)) {
         echo $tab . str_repeat('=', 50) . "\n" . $tab . 'book added successfully' . "\n" . $tab . str_repeat('=', 50) . "\n";
     }
 }
