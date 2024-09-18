@@ -6,4 +6,8 @@ class BooksController extends Controller
     public function addBook($data): bool{
         return $this->add($data);
     }
+
+    public function findBook($title): Array | bool{
+        return $this->find($title);
+    }
 }
