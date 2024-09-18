@@ -16,16 +16,13 @@ class Controller
         return $this->dataManager->setData($this->data);
     }
 
-    protected function find($title): Array|bool{
-        $found = false;
-        foreach ($this->data as $book) {
-            if ($book["title"] === $title) {
-                return $book;
-            }
-        }
-        return $found;
-    }
+    protected function addAutor($_data):bool{}
 
-    // For the Prototype we will be only adding
+    protected function find($title):Array{}
+
+    protected function remove($_data):bool{}
+
+    protected function update($_data): bool{}
+
     
 }

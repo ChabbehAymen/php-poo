@@ -1,1 +1,10 @@
-[{"title":"Title","author":["Writer"],"reader":"no","loaned":"false"}]
+[
+    {   
+        "title": "Title",
+        "author": [
+            "Writer"
+        ],
+        "reader": "no",
+        "loaned": "false"
+    }
+]
