@@ -1,7 +1,7 @@
 <?php
 require_once(dirname(__FILE__) ."/../Repository/DataManager.php");
 require_once(dirname(__FILE__) ."/Controller.php");
-class BooksController extends Controller
+class AdminController extends Controller
 {
     public function addBook($data): bool{
         return $this->add($data);
@@ -9,5 +9,10 @@ class BooksController extends Controller
 
     public function findBook($title): Array | bool{
         return $this->find($title);
+    }
+
+    public function deleteBook($title)
+    {
+        return $this->delete($title);
     }
 }

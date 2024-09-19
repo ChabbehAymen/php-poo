@@ -42,7 +42,7 @@ class Controller
         return $found;
     }
 
-    protected function remove($title): bool
+    protected function delete($title): bool
     {
         $removed = false;
         array_filter($this->data, function ($book) {
@@ -54,6 +54,14 @@ class Controller
 
     protected function update($_data): bool
     {
+        $updated = false;
+        foreach ($this->data as $book) {
+            if ($book["title"] === $_data['title']) {
+                $book[$_data['key']] = $_data['value'];
+                return $this->dataManager->setData($this->data);
+            }
+        }
+        return $updated;
     }
 
 
