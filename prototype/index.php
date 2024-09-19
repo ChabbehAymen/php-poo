@@ -1,7 +1,8 @@
 <?php
 require_once './Controller/BooksController.php';
 
-$bookManager = new BooksController();
+$adminController = new AdminController();
+$isAdmin = '';
 $runProgram = true;
 $programEnded = false;
 $tab = str_repeat("\t", 5);
@@ -25,9 +26,9 @@ function addBook($bookManager, $tab) {
 }
 
 function findBook() {
-    global $tab, $bookManager;
+    global $tab, $adminController;
     $bookTitle = ask($tab."What is the Book Title: ");
-    $book = $bookManager->findBook($bookTitle);
+    $book = $adminController->findBook($bookTitle);
     $book ?echoBook($book):$tab.'No Book Found With This Title';
 }
 
@@ -38,7 +39,7 @@ function echoBook($book){
     foreach ($book['author'] as $author) {
         echo $tab.'      '.$author.PHP_EOL;
     }
-    
+
     if ($book['loaned'] == 'true') {
         echo $tab.'Loaned To '.$book['reader'];
     }else echo $tab.'Avialable: True';
@@ -54,10 +55,18 @@ function endProgram($tab) {
 
 function program($bookManager, $tab) {
     global $runProgram, $programEnded;
+
+    echo "\n" . $tab . str_repeat('=', 50) . "\n";
+    echo $tab . 'Welcome to Our Library' . "\n";
+    echo $tab . str_repeat('=', 50) . "\n";
+    echo PHP_EOL;
+    echo PHP_EOL;
+    echo $tab . '[u]    Login as a Reader' . "\n";
+    echo $tab . '[a]    Login as an Admin' . "\n";
+    echo PHP_EOL;
+    $isAdmin = ask($tab."Login: ") === 'a'? true: false;
+
     while ($runProgram) {
-        echo "\n" . $tab . str_repeat('=', 50) . "\n";
-        echo $tab . 'Welcome to Our Library' . "\n";
-        echo $tab . str_repeat('=', 50) . "\n";
 
         echo $tab . 'How can I help you?' . "\n";
         echo $tab . '[i]    Add a Book' . "\n";
@@ -83,5 +92,5 @@ function program($bookManager, $tab) {
     }
 }
 
-program($bookManager, $tab);
+program($adminController, $tab);
 
