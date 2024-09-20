@@ -43,9 +43,24 @@ class Auteur {
 class Livre {
     private $id;
     private $titre;
-    private $auteur; // Un objet Auteur
+    private $auteur; 
 
-    // ... getters et setters ...
+    public function getId(): ?int {
+        return $this->id;
+    }
+    public function getAuteur(?string $nom): void {
+        $this->nom = $nom;
+    }
+    public function setLivre(Livre $livre): void {
+        $this->livre = $livre;
+    }
+    public function setAuteur(?string $auteur): void {
+        $this->auteur = $auteur;
+    }
+    public function setId(?int $id): void {
+        $this->id = $id;
+    }
+
 }
 // Many to many
 class Etudiant {

@@ -5,7 +5,7 @@ class Voiture {
     public $couleur;
 
     public function demarrer() {
-        echo "La".$this->modle." voiture démarre.";
+        echo "La".$this->modele." voiture démarre.";
     }
 }
 
