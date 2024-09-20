@@ -38,26 +38,6 @@ function program() {
         elseif ($op === 's') findBook();
         elseif ($op === 'x') endProgram();
         else echo 'Unknown Command' . "\n";
-        // switch ($op) {
-        //     case 'i' && $isAdmin === true:
-        //         addBook();
-        //         break;
-        //     case 'd' && $isAdmin === true:
-        //         deleteBook();
-        //         break;
-        //     case 'u' && $isAdmin === true:
-        //         updateBook();
-        //         break;
-        //     case 's':
-        //         findBook();
-        //         break;
-        //     case 'x':
-        //         endProgram();
-        //         break;
-        //     default:
-                
-        //         break;
-        // }
         $programEnded = true;
     }
 }
