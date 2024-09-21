@@ -1,7 +1,11 @@
 <?php
-class DataManager{
-
-    private $data;
+/**
+ * 
+ */
+class DataBase
+{
+	
+	private $data;
 
     private $filePath;
     public function __construct(){
