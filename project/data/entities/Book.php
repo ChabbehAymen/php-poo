@@ -6,7 +6,15 @@ class Book
     private String $ISBN;
     private String $title;
     private String $pubDate;
+    private Array $authors;
+    private Reader $reader;
 
+
+    public function __construct(String $ISBN, String $title, String $pubDate) {
+        $this->ISBN = $ISBN;
+        $this->title = $title;
+        $this->pubDate = $pubDate;
+    }
 
     /**
      * Get the value of id
@@ -82,6 +90,42 @@ class Book
     {
         $this->pubDate = $pubDate;
 
+    }
+
+    /**
+     * Get the value of authors
+     */ 
+    public function getAuthors(): array
+    {
+        return $this->authors;
+    }
+
+    /**
+     * Set the value of authors
+     *
+     * @return  void
+     */ 
+    public function setAuthors(array $authors): void
+    {
+        $this->authors = $authors;
+    }
+
+    /**
+     * Get the value of readers
+     */ 
+    public function getReaders(): Reader
+    {
+        return $this->reader;
+    }
+
+    /**
+     * Set the value of readers
+     *
+     * @return  void
+     */ 
+    public function setReaders(Reader $reader): void
+    {
+        $this->reader = $reader;
     }
 }
 

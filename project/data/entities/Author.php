@@ -1,12 +1,11 @@
 <?php
 
-class Authure
+class Author
 {
     private int $id;
     private String $name;
     private String $lastName;
     private String $nationality;
-
     private Array $books;
 
     public function __construct(String $name, String $lastName, String $nationality){
@@ -20,7 +19,7 @@ class Authure
         return $this->id;
     }
 
-    private function setId(): Void
+    private function setId(): void
     {
         $this->id = random_int(1, 100);
     }
@@ -29,7 +28,7 @@ class Authure
     {
         return $this->name;
     }
-    public function setName(String $name): Void
+    public function setName(String $name): void
     {
         $this->name = $name;
     }
@@ -38,7 +37,7 @@ class Authure
     {
         return $this->lastName;
     }
-    public function setLastName(String $lastName): Void
+    public function setLastName(String $lastName): void
     {
         $this->lastName = $lastName;
     }
@@ -47,7 +46,7 @@ class Authure
     {
         return $this->nationality;
     }
-    public function setNationality(String $nationality): Void
+    public function setNationality(String $nationality): void
     {
         $this->nationality = $nationality;
     }
@@ -57,9 +56,9 @@ class Authure
         return $this->books;
     }
 
-    public function setBook(Object $book): Void
+    public function setBook(array $books): void
     {
-        array_push($this->books, $book);
+        $this->books = $books;
     }
 
 }
