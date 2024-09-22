@@ -4,25 +4,44 @@ require_once(dirname(dirname(__FILE__)) . "/data/dataAccess/BookDao.php");
 
 class Controller
 {
-    private BooksRepo $booksRepo;
+    private BooksRepo $repo;
 
-    public function __construct() {
-        $this->booksRepo = new BooksRepo(new BookDao());
+    public function __construct(Repository $repo) {
+        $this->repo = $repo;
     }
     /**
-     * Gets all Books from data data base
+     * Gets all data from db
      * @return array
      */
-    public function getBooks(): array
+    public function getAll(): array
     {
-        return $this->booksRepo->getAll();
+        return $this->repo->getAll();
     }
     /**
-     * Create new book object and insert it to db
+     * Create new entity object and insert it to db
+     * @param object $object
      * @return bool
      */
-    public function CreateBook():bool
+    public function add(object $obj):bool
     {
-        return true;
+        return $this->repo->add($obj);
+    }
+    /**
+     * deletes the object form db by it's id
+     * @param int $id
+     * @return bool
+     */
+    public function remove(int $id):bool
+    {
+        return $this->repo->remove($id);
+    }
+    /**
+     * Finds object in db by it's id
+     * @param int $id
+     * @return object
+     */
+    public function find(int $id): object
+    {
+        return $this->repo->find($id);
     }
 }
