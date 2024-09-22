@@ -1,97 +1,123 @@
 <?php
-require_once './Controller/AdminController.php';
+require_once './controller/Controller.php';
 
-$adminController = new AdminController();
 $runProgram = true;
-$programEnded = false;
+$controller = new Controller();
 $tab = str_repeat("\t", 5);
-
 
 program();
 
 function program() {
-    global $runProgram, $programEnded, $tab, $adminController, $isAdmin;
+    global $runProgram, $tab, $controller;
+
     echo "\n" . $tab . str_repeat('=', 50) . "\n";
     echo $tab . 'Welcome to Our Library' . "\n";
-    echo $tab . str_repeat('=', 50) . "\n";
-    echo PHP_EOL;
-    echo PHP_EOL;
+    echo $tab . str_repeat('=', 50) . "\n\n";
+
     echo $tab . '[u]    Login as a Reader' . "\n";
-    echo $tab . '[a]    Login as an Admin' . "\n";
-    echo PHP_EOL;
-    $isAdmin = ask($tab."Login: ") === 'a'? true: false;
+    echo $tab . '[a]    Login as an Admin' . "\n\n";
 
+    $isAdmin = ask($tab . "Login: ") === 'a';
+    
     while ($runProgram) {
-        echo $tab . 'How can I help you?' . "\n";
-        echo $tab . '[s]    Search Book' . "\n";
-        if ($isAdmin) {
-                echo $tab . '[i]    Add a Book' . "\n";
-                echo $tab . '[d]    Delete a Book' . "\n";
-                echo $tab . '[u]    Update a Book' . "\n";
-            }
-        echo $tab . '[x]    Exit The Program' . "\n";
-
+        displayOptions($isAdmin);
         $op = ask($tab . 'Select An Operation: ');
-        if ($op === 'i' && $isAdmin) addBook();
-        elseif ($op === 'd' && $isAdmin) deleteBook();
-        elseif ($op === 'u' && $isAdmin) updateBook();
-        elseif ($op === 's') findBook();
-        elseif ($op === 'x') endProgram();
-        else echo 'Unknown Command' . "\n";
-        $programEnded = true;
+
+        handleOperation($op, $isAdmin);
+    }
+}
+
+function displayOptions($isAdmin) {
+    global $tab;
+    echo $tab . 'How can I help you?' . "\n";
+    echo $tab . '[s]    Search Book' . "\n";
+
+    if ($isAdmin) {
+        echo $tab . '[i]    Add a Book' . "\n";
+        echo $tab . '[d]    Delete a Book' . "\n";
+        echo $tab . '[u]    Update a Book' . "\n"; // Update function commented out in original
+    }
+
+    echo $tab . '[x]    Exit The Program' . "\n";
+}
+
+function handleOperation($op, $isAdmin) {
+    if ($op === 'i' && $isAdmin) {
+        addBook();
+    } elseif ($op === 'd' && $isAdmin) {
+        deleteBook();
+    } elseif ($op === 's') {
+        findBook();
+    } elseif ($op === 'x') {
+        endProgram();
+    } else {
+        echo 'Unknown Command' . "\n";
     }
 }
 
 function ask($query) {
     echo $query;
-    return trim(string: fgets(STDIN));
+    return trim(fgets(STDIN));
 }
 
 function addBook() {
-    global $adminController, $tab;
+    global $controller, $tab;
+
     echo "\n";
-    $book = [
-        'title' => ask($tab . 'Book Title: '),
-        'author' => [ask($tab . 'Author: ')],
-        'reader' => ask($tab . 'Reader: '),
-        'loaned' => ask($tab . 'Is It Loaned: '),
-    ];
-    if ($adminController->addBook($book)) {
-        echo $tab . str_repeat('=', 50) . "\n" . $tab . 'book added successfully' . "\n" . $tab . str_repeat('=', 50) . "\n";
+    $book = new Book(ISBN:ask($tab . 'Book\'s ISBN: '), title: ask($tab . 'Book\'s Title: '), pubDate: ask($tab . 'Book\'s Publication Date: '));
+
+    if ($controller->addBook($book)) {
+        echoSuccessMessage('Book added successfully');
     }
 }
 
-function deleteBook(){
-    global $adminController, $tab, $ask;
-    if($adminController->deleteBook(ask($tab."Book's Title:  ")))echo $tab.' Book Deleted successfully';
+function deleteBook() {
+    global $controller, $tab;
+    $bookTitle = ask($tab . "Book's Title: ");
+    
+    if ($controller->deleteBook($bookTitle)) {
+        echo $tab . 'Book deleted successfully';
+    }
 }
 
 function findBook() {
-    global $tab, $adminController;
-    $bookTitle = ask($tab."What is the Book Title: ");
-    $book = $adminController->findBook($bookTitle);
-    $book ?echoBook($book):$tab.'No Book Found With This Title';
+    global $tab, $controller;
+
+    $bookTitle = ask($tab . "What is the Book Title: ");
+    $book = $controller->findBook($bookTitle);
+    
+    if ($book) {
+        echoBook($book);
+    } else {
+        echo $tab . 'No Book Found With This Title';
+    }
 }
 
-function echoBook($book){
+function echoBook($book) {
     global $tab;
-    echo $tab.'Title: '.$book['title'].PHP_EOL;
-    echo $tab.'Authors Are: '.PHP_EOL;
+
+    echo $tab . 'Title: ' . $book['title'] . PHP_EOL;
+    echo $tab . 'Authors Are: ' . PHP_EOL;
+
     foreach ($book['author'] as $author) {
-        echo $tab.'      '.$author.PHP_EOL;
+        echo $tab . '      ' . $author . PHP_EOL;
     }
-    
-    if ($book['loaned'] == 'true') {
-        echo $tab.'Loaned To '.$book['reader'];
-    }else echo $tab.'Avialable: True';
+
+    echo $book['loaned'] == 'true' 
+        ? $tab . 'Loaned To ' . $book['reader'] 
+        : $tab . 'Available: True';
 }
 
 function endProgram() {
     global $runProgram, $tab;
+    
     $runProgram = false;
     echo "\n" . $tab . str_repeat('=', 50) . "\n";
     echo $tab . 'See You Again' . "\n";
     echo $tab . str_repeat('=', 50) . "\n";
 }
 
-
+function echoSuccessMessage($message) {
+    global $tab;
+    echo $tab . str_repeat('=', 50) . "\n" . $tab . $message . "\n" . $tab . str_repeat('=', 50) . "\n";
+}
