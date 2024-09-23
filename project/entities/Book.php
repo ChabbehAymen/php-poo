@@ -11,6 +11,7 @@ class Book
 
 
     public function __construct(String $ISBN, String $title, String $pubDate) {
+        $this->id = Time();
         $this->ISBN = $ISBN;
         $this->title = $title;
         $this->pubDate = $pubDate;

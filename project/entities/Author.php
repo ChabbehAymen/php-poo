@@ -9,6 +9,7 @@ class Author
     private Array $books;
 
     public function __construct(String $name, String $lastName, String $nationality){
+        $this->id = Time();
         $this->name = $name;
         $this->lastName = $lastName;
         $this->nationality = $nationality;

@@ -1,6 +1,6 @@
 <?php
 require_once(dirname(dirname(__FILE__)) . "/repository/BooksRepo.php");
-require_once(dirname(dirname(__FILE__)) . "/data/dataAccess/BookDao.php");
+require_once(dirname(dirname(__FILE__)) . "/dataAccess/BookDao.php");
 
 class Controller
 {

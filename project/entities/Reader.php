@@ -9,6 +9,7 @@ class Reader
     private Array $books;
 
     public function __construct($cardNumber, $name, $lastName, $address) {
+        $this->id = Time();
         $this->cardNumber = $cardNumber;
         $this->name = $name;
         $this->$lastName = $$lastName;
