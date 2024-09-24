@@ -1,5 +1,4 @@
 <?php
-
 abstract class Repository
 {
     private DataAccess $dao;

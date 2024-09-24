@@ -1,5 +1,4 @@
 <?php 
-
 class Book
 {
     private int $id;
@@ -76,8 +75,10 @@ class Book
 
     /**
      * Get the value of pubDate
+     * 
+     * @return string
      */ 
-    public function getPubDate()
+    public function getPubDate(): string
     {
         return $this->pubDate;
     }
