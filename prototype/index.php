@@ -1,7 +1,7 @@
 <?php
-require_once './Controller/BooksController.php';
+require_once './services/BookService.php';
 
-$adminController = new AdminController();
+$bookService = new BookService();
 $isAdmin = '';
 $runProgram = true;
 $programEnded = false;
@@ -54,41 +54,21 @@ function endProgram($tab) {
 }
 
 function program($bookManager, $tab) {
-    global $runProgram, $programEnded;
-
-    echo "\n" . $tab . str_repeat('=', 50) . "\n";
-    echo $tab . 'Welcome to Our Library' . "\n";
-    echo $tab . str_repeat('=', 50) . "\n";
-    echo PHP_EOL;
-    echo PHP_EOL;
-    echo $tab . '[u]    Login as a Reader' . "\n";
-    echo $tab . '[a]    Login as an Admin' . "\n";
-    echo PHP_EOL;
-    $isAdmin = ask($tab."Login: ") === 'a'? true: false;
-
-    while ($runProgram) {
-
-        echo $tab . 'How can I help you?' . "\n";
-        echo $tab . '[i]    Add a Book' . "\n";
-        echo $tab . '[s]    Search Book' . "\n";
-        echo $tab . '[x]    Exit The Program' . "\n";
-
-        $op = ask($tab . 'Select An Operation: ');
-        switch ($op) {
-            case 'i':
-                addBook($bookManager, $tab);
-                break;
-            case 'x':
-                endProgram($tab);
-                break;
-            case 's':
-                findBook();
-                break;
-            default:
-                echo 'Unknown Command' . "\n";
-                break;
-        }
-        $programEnded = true;
+    global $runProgram, $programEnded, $bookService;
+    $op = ask($tab."Slect operation | [l] list all books | [d] delete book | [a] add book ");
+    if ($op === 'l') {
+        $books = $bookService->getBooks();
+    }elseif($op === 'a')
+    {
+        $isbm = ask($tab.'Enter ISBM:  ');
+        $title = ask($tab.'Enter Title:  ');
+        $pubDate = ask($tab.'Enter Publication date:  ');
+        $book = new Book($isbm, $title, $pubDate);
+        $bookService->addBook($book);
+    }
+    else {
+        $op2 = ask($tab.'give me book id: ');
+        $bookService->deleteBook($op2);
     }
 }
 
