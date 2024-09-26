@@ -7,6 +7,11 @@ class BookService
     public function __construct() {
         $this->dao = new BookDao();
     }
+    /**
+     * Insert Book To Db Using DAO
+     * @param Book $book
+     * @return void
+     */
     public function addBook(Book $book): void
     {
         $this->dao->addBook($book);
